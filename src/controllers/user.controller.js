@@ -23,9 +23,9 @@ router.get("/:id/delete", async (req, res) => {
   // /users/:id/edit => edit form
   try {
     await User.findByIdAndDelete(req.params.id).lean().exec();
-    const users = await User.find().lean().exec();
+    const items = await User.find().lean().exec();
     // 6 users => deleted 1 => when we get all users we get 5 => redirect to index with 5 users
-    return res.render("users/index", { users: users });
+    return res.render("users/index", { items });
   } catch (err) {}
 });
 
@@ -34,6 +34,6 @@ router.post("", crudController(User).post);
 router.get("", crudController(User, "users/index").get);
 router.get("/:id", crudController(User).getOne);
 router.patch("/:id", crudController(User, "users/index").updateOne);
-router.delete("/:id", crudController(User).deleteOne);
+// router.delete("/:id", crudController(User).deleteOne);
 
 module.exports = router;
